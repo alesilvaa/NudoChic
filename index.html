@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NudoChic - Catálogo de Productos</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>Nudo<span>Chic</span></h1>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#inicio" class="active">Inicio</a></li>
+                <li><a href="#catalogo">Catálogo</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="hero">
+        <div class="hero-content">
+            <h1>Descubre tu estilo en <span>NudoChic</span></h1>
+            <p>Diseños únicos que expresan tu personalidad</p>
+            <a href="#catalogo" class="btn-primary">Ver Catálogo</a>
+        </div>
+    </section>
+
+    <section id="catalogo">
+        <div class="section-header">
+            <h2>Nuestro Catálogo</h2>
+            <p>Explora nuestra colección exclusiva</p>
+        </div>
+        
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="todos">Todos</button>
+            <button class="filter-btn" data-filter="categoria1">Categoría 1</button>
+            <button class="filter-btn" data-filter="categoria2">Categoría 2</button>
+            <button class="filter-btn" data-filter="categoria3">Categoría 3</button>
+        </div>
+
+        <div class="productos-grid">
+            <!-- Los productos se cargarán desde JavaScript -->
+        </div>
+
+        <div class="catalogo-action">
+            <a href="#" class="btn-secondary" id="cargar-mas">Cargar Más</a>
+        </div>
+    </section>
+
+    <section id="destacados">
+        <div class="section-header">
+            <h2>Productos Destacados</h2>
+            <p>Lo mejor de nuestra colección</p>
+        </div>
+        
+        <div class="carousel-container">
+            <div class="carousel-track" id="carousel-track">
+                <!-- Los productos destacados se cargarán desde JavaScript -->
+            </div>
+            <button class="carousel-btn prev" id="prev-btn"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-btn next" id="next-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </section>
+
+    <section id="nosotros">
+        <div class="nosotros-container">
+            <div class="nosotros-img">
+                <img src="/api/placeholder/500/700" alt="Sobre NudoChic">
+            </div>
+            <div class="nosotros-content">
+                <h2>Nuestra Historia</h2>
+                <p>En NudoChic, creamos productos únicos con la pasión por el diseño y la artesanía. Nuestra misión es ofrecer productos de alta calidad que combinen estilo, funcionalidad y originalidad.</p>
+                <p>Fundada en 2020, nuestra marca ha crecido gracias a clientes que valoran la exclusividad y el cuidado por los detalles.</p>
+                <a href="#contacto" class="btn-secondary">Conoce Más</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="newsletter">
+        <div class="newsletter-container">
+            <h2>Mantente Informado</h2>
+            <p>Suscríbete para recibir novedades y ofertas exclusivas</p>
+            <form id="newsletter-form">
+                <input type="email" placeholder="Tu correo electrónico" required>
+                <button type="submit" class="btn-primary">Suscribirse</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="contacto">
+        <div class="section-header">
+            <h2>Contacto</h2>
+            <p>Estamos para ayudarte</p>
+        </div>
+        
+        <div class="contacto-container">
+            <div class="contacto-info">
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <h3>Ubicación</h3>
+                        <p>Calle Principal 123, Ciudad</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <h3>Email</h3>
+                        <p>info@nudochic.com</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <h3>Teléfono</h3>
+                        <p>+123 456 7890</p>
+                    </div>
+                </div>
+                <div class="redes-sociales">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            
+            <div class="contacto-form">
+                <form id="form-contacto">
+                    <div class="form-group">
+                        <input type="text" placeholder="Nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Asunto">
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Mensaje" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">Enviar Mensaje</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo">
+                <h2>Nudo<span>Chic</span></h2>
+                <p>Diseño y estilo para tu vida</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h3>Enlaces</h3>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#catalogo">Catálogo</a></li>
+                        <li><a href="#nosotros">Nosotros</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Categorías</h3>
+                    <ul>
+                        <li><a href="#">Categoría 1</a></li>
+                        <li><a href="#">Categoría 2</a></li>
+                        <li><a href="#">Categoría 3</a></li>
+                        <li><a href="#">Ver Todas</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Términos y Condiciones</a></li>
+                        <li><a href="#">Política de Privacidad</a></li>
+                        <li><a href="#">Política de Cookies</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 NudoChic. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Modal de producto -->
+    <div class="modal" id="producto-modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-body">
+                <!-- Contenido del modal se cargará dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
