@@ -13,11 +13,15 @@
 <body>
     <header>
         <nav>
+            <div class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
             <div class="logo">
                 <h1>Nudo<span>Chic</span></h1>
             </div>
-            <div class="menu-toggle" id="menu-toggle">
-                <i class="fas fa-bars"></i>
+            <div class="cart-icon" id="cart-toggle">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
             </div>
             <ul class="nav-links" id="nav-links">
                 <li><a href="#inicio" class="active">Inicio</a></li>
@@ -27,6 +31,27 @@
             </ul>
         </nav>
     </header>
+
+    <!-- Barra lateral del carrito -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Tu Carrito</h3>
+            <span class="cart-close" id="cart-close"><i class="fas fa-times"></i></span>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <!-- Los ítems del carrito se cargarán dinámicamente -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-price">$0.00</span>
+            </div>
+            <button class="btn-primary checkout-btn">Finalizar Compra</button>
+        </div>
+    </div>
+    
+    <!-- Overlay para cuando el carrito está abierto -->
+    <div class="cart-overlay" id="cart-overlay"></div>
 
     <section id="hero">
         <div class="hero-content">
@@ -44,9 +69,9 @@
         
         <div class="filter-container">
             <button class="filter-btn active" data-filter="todos">Todos</button>
-            <button class="filter-btn" data-filter="categoria1">Carteras</button>
-            <button class="filter-btn" data-filter="categoria2">Estuches</button>
-            <button class="filter-btn" data-filter="categoria3">Nueva Colección</button>
+            <button class="filter-btn" data-filter="De Mano">De Mano</button>
+            <button class="filter-btn" data-filter="De Hombro">De Hombro</button>
+            <button class="filter-btn" data-filter="NewCollection">Nueva Colección</button>
         </div>
 
         <div class="productos-grid">
@@ -76,12 +101,12 @@
     <section id="nosotros">
         <div class="nosotros-container">
             <div class="nosotros-img">
-                <img src="/api/placeholder/500/700" alt="Sobre NudoChic">
+                <img src="/IMG/Historia/icon.jpeg" alt="Sobre NudoChic">
             </div>
             <div class="nosotros-content">
                 <h2>Nuestra Historia</h2>
                 <p>En NudoChic, creamos productos únicos con la pasión por el diseño y la artesanía. Nuestra misión es ofrecer productos de alta calidad que combinen estilo, funcionalidad y originalidad.</p>
-                <p>Fundada en 2025, nuestra marca ha crecido gracias a clientes que valoran la exclusividad y el cuidado por los detalles.</p>
+                <p>Fundada en 2025.</p>
                 <a href="#contacto" class="btn-secondary">Conoce Más</a>
             </div>
         </div>
@@ -110,7 +135,7 @@
                     <i class="fas fa-map-marker-alt"></i>
                     <div>
                         <h3>Ubicación</h3>
-                        <p>Calle Principal 123, Ciudad</p>
+                        <p>Guavira 123, Asuncion</p>
                     </div>
                 </div>
                 <div class="info-item">
@@ -124,7 +149,7 @@
                     <i class="fas fa-phone"></i>
                     <div>
                         <h3>Teléfono</h3>
-                        <p>+123 456 7890</p>
+                        <p>+595 972 669300</p>
                     </div>
                 </div>
                 <div class="redes-sociales">

@@ -13,6 +13,308 @@ document.addEventListener('DOMContentLoaded', function() {
     const modalBody = document.querySelector('.modal-body');
     const cargarMasBtn = document.getElementById('cargar-mas');
     
+    // Carrito de compras - Funcionalidad completa
+const cartToggle = document.getElementById('cart-toggle');
+const cartSidebar = document.getElementById('cart-sidebar');
+const cartClose = document.getElementById('cart-close');
+const cartOverlay = document.getElementById('cart-overlay');
+const cartItems = document.getElementById('cart-items');
+const cartTotalPrice = document.getElementById('cart-total-price');
+const cartCount = document.querySelector('.cart-count');
+
+// Abrir carrito
+cartToggle.addEventListener('click', () => {
+    cartSidebar.classList.add('active');
+    cartOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    actualizarCarrito();
+});
+// Cerrar carrito
+function cerrarCarrito() {
+    cartSidebar.classList.remove('active');
+    cartOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+cartClose.addEventListener('click', cerrarCarrito);
+cartOverlay.addEventListener('click', cerrarCarrito);
+
+// Actualizar carrito
+function actualizarCarrito() {
+    cartItems.innerHTML = '';
+    let total = 0;
+    
+    if (carrito.length === 0) {
+        cartItems.innerHTML = '<p class="empty-cart">Tu carrito está vacío</p>';
+        cartCount.textContent = '0';
+        cartTotalPrice.textContent = '$0.00';
+        return;
+    }
+    
+    carrito.forEach(item => {
+        const itemTotal = item.precio * item.cantidad;
+        total += itemTotal;
+        
+        const cartItem = document.createElement('div');
+        cartItem.className = 'cart-item';
+        cartItem.innerHTML = `
+            <div class="cart-item-img">
+                <img src="${item.imagen}" alt="${item.nombre}">
+            </div>
+            <div class="cart-item-details">
+                <h4>${item.nombre}</h4>
+                <div class="cart-item-price">$${item.precio.toFixed(2)}</div>
+                <div class="cart-item-quantity">
+                    <button class="quantity-btn cart-decrement" data-id="${item.id}">-</button>
+                    <span>${item.cantidad}</span>
+                    <button class="quantity-btn cart-increment" data-id="${item.id}">+</button>
+                </div>
+            </div>
+            <button class="cart-item-remove" data-id="${item.id}">
+                <i class="fas fa-trash"></i>
+            </button>
+        `;
+        
+        cartItems.appendChild(cartItem);
+    });
+    
+    // Actualizar contador y total
+    cartCount.textContent = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+    cartTotalPrice.textContent = `$${total.toFixed(2)}`;
+    
+    // Añadir event listeners a los botones
+    document.querySelectorAll('.cart-decrement').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = parseInt(btn.dataset.id);
+            decrementarCantidad(id);
+        });
+    });
+    
+    document.querySelectorAll('.cart-increment').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = parseInt(btn.dataset.id);
+            incrementarCantidad(id);
+        });
+    });
+    
+    document.querySelectorAll('.cart-item-remove').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = parseInt(btn.dataset.id);
+            eliminarDelCarrito(id);
+        });
+    });
+}
+
+// Incrementar cantidad
+function incrementarCantidad(id) {
+    const item = carrito.find(item => item.id === id);
+    if (item && item.cantidad < 10) {
+        item.cantidad++;
+        actualizarCarrito();
+    }
+}
+
+// Decrementar cantidad
+function decrementarCantidad(id) {
+    const item = carrito.find(item => item.id === id);
+    if (item && item.cantidad > 1) {
+        item.cantidad--;
+        actualizarCarrito();
+    }
+}
+
+// Eliminar del carrito
+function eliminarDelCarrito(id) {
+    carrito = carrito.filter(item => item.id !== id);
+    actualizarCarrito();
+}
+
+// Finalizar compra
+const checkoutBtn = document.querySelector('.checkout-btn');
+checkoutBtn.addEventListener('click', () => {
+    if (carrito.length === 0) {
+        alert('Tu carrito está vacío');
+        return;
+    }
+    
+    // Aquí puedes implementar la lógica para finalizar la compra
+    // Por ejemplo, redirigir a una página de checkout o mostrar un formulario
+    
+    // Simulación de finalización de compra
+    alert('¡Gracias por tu compra! Total: $' + cartTotalPrice.textContent.slice(1));
+    carrito = [];
+    actualizarCarrito();
+    cerrarCarrito();
+});
+
+// Añadir estilos para el carrito
+const cartStyles = document.createElement('style');
+cartStyles.textContent = `
+    .cart-sidebar {
+        position: fixed;
+        top: 0;
+        right: -400px;
+        width: 350px;
+        max-width: 90vw;
+        height: 100vh;
+        background-color: white;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        z-index: 2000;
+        transition: right 0.3s ease;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .cart-sidebar.active {
+        right: 0;
+    }
+    
+    .cart-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1999;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease;
+    }
+    
+    .cart-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .cart-header {
+        padding: 20px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .cart-close {
+        cursor: pointer;
+        font-size: 1.2rem;
+    }
+    
+    .cart-items {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+    }
+    
+    .empty-cart {
+        text-align: center;
+        padding: 30px 0;
+        color: #888;
+    }
+    
+    .cart-item {
+        display: flex;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #eee;
+        position: relative;
+    }
+    
+    .cart-item-img {
+        width: 80px;
+        height: 80px;
+        margin-right: 15px;
+    }
+    
+    .cart-item-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: var(--border-radius);
+    }
+    
+    .cart-item-details {
+        flex: 1;
+    }
+    
+    .cart-item-details h4 {
+        margin: 0 0 5px;
+        font-size: 1rem;
+    }
+    
+    .cart-item-price {
+        font-weight: 600;
+        color: var(--primary-color);
+        margin-bottom: 10px;
+    }
+    
+    .cart-item-quantity {
+        display: flex;
+        align-items: center;
+    }
+    
+    .quantity-btn {
+        width: 25px;
+        height: 25px;
+        background-color: #f0f0f0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+    .cart-item-quantity span {
+        margin: 0 10px;
+    }
+    
+    .cart-item-remove {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: none;
+        border: none;
+        color: #e74c3c;
+        cursor: pointer;
+    }
+    
+    .cart-footer {
+        padding: 20px;
+        border-top: 1px solid #eee;
+    }
+    
+    .cart-total {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 600;
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+    }
+    
+    .checkout-btn {
+        width: 100%;
+    }
+    
+    .cart-count {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background-color: var(--primary-color);
+        color: white;
+        font-size: 0.7rem;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .cart-icon {
+        position: relative;
+        cursor: pointer;
+    }
+`;
+document.head.appendChild(cartStyles);
+
     // Menu toggle
     menuToggle.addEventListener('click', () => {
         navLinks.classList.toggle('active');
@@ -59,66 +361,66 @@ document.addEventListener('DOMContentLoaded', function() {
     const productos = [
         {
             id: 1,
-            nombre: 'Producto 1',
-            categoria: 'categoria1',
-            precio: 59.99,
-            imagen: '/api/placeholder/400/400',
+            nombre: 'Cartera de Mano',
+            categoria: 'De Mano',
+            precio: 120.000,
+            imagen: '/IMG/DeMano/demano3.jpeg',
             descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
         },
         {
             id: 2,
-            nombre: 'Producto 2',
-            categoria: 'categoria1',
-            precio: 49.99,
-            imagen: '/api/placeholder/400/400',
+            nombre: 'Porta Notebook',
+            categoria: 'De Mano',
+            precio: 99.000,
+            imagen: '/IMG/DeMano/demano2.jpeg',
             descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
         },
         {
             id: 3,
-            nombre: 'Producto 3',
-            categoria: 'categoria2',
-            precio: 69.99,
-            imagen: '/api/placeholder/400/400',
+            nombre: 'Cartera Multicolor',
+            categoria: 'De Hombro',
+            precio: 235.000,
+            imagen: '/IMG/DeHombro/bolso de trapillo a crochet.jpeg',
             descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
         },
         {
             id: 4,
-            nombre: 'Producto 4',
-            categoria: 'categoria2',
-            precio: 79.99,
-            imagen: '/api/placeholder/400/400',
+            nombre: 'Cartera con perlas',
+            categoria: 'De Hombro',
+            precio: 190.000,
+            imagen: '/IMG/DeHombro/img2.jpeg',
             descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
         },
         {
             id: 5,
-            nombre: 'Producto 5',
-            categoria: 'categoria3',
-            precio: 89.99,
-            imagen: '/api/placeholder/400/400',
+            nombre: 'Porta Auricular',
+            categoria: 'NewCollection',
+            precio: 50.000,
+            imagen: '/IMG/Extras/extra2.jpeg',
             descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
         },
         {
             id: 6,
-            nombre: 'Producto 6',
-            categoria: 'categoria3',
-            precio: 99.99,
-            imagen: '/api/placeholder/400/400',
+            nombre: 'Porta Celular',
+            categoria: 'NewCollection',
+            precio: 80.000,
+            imagen: '/IMG/Extras/extra.jpeg',
             descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
         },
         {
             id: 7,
-            nombre: 'Producto 7',
-            categoria: 'categoria1',
-            precio: 109.99,
-            imagen: '/api/placeholder/400/400',
+            nombre: 'Cartera Negra',
+            categoria: 'De Mano',
+            precio: 109.000,
+            imagen: '/IMG/DeMano/demano.jpeg',
             descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
         },
         {
             id: 8,
-            nombre: 'Producto 8',
-            categoria: 'categoria2',
-            precio: 119.99,
-            imagen: '/api/placeholder/400/400',
+            nombre: 'Yoselain',
+            categoria: 'De Hombro',
+            precio: 119.000,
+            imagen: '/IMG/DeHombro/dehombro.jpeg',
             descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
         }
     ];
@@ -127,9 +429,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const productosDestacados = [
         productos[0],
         productos[2],
-        productos[4],
-        productos[5],
-        productos[7]
+        productos[4]
     ];
     
     // Función para crear tarjeta de producto
@@ -143,7 +443,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="producto-info">
                 <div class="producto-categoria">${producto.categoria}</div>
                 <h3 class="producto-nombre">${producto.nombre}</h3>
-                <div class="producto-precio">$${producto.precio.toFixed(2)}</div>
+                <div class="producto-precio">Gs.${producto.precio.toFixed(3)}</div>
                 <div class="producto-action">
                     <button class="btn-detalles" data-id="${producto.id}">Detalles</button>
                     <button class="btn-agregar" data-id="${producto.id}">Agregar</button>
@@ -226,7 +526,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 </div>
             </div>
-        `;
+        `;;
         
         // Event listeners para controles de cantidad
         const decrementoBtn = modalBody.querySelector('.decremento');
@@ -260,6 +560,224 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.overflow = 'hidden';
     }
     
+
+    const modalResponsiveStyles = document.createElement('style');
+    modalResponsiveStyles.textContent = `
+        /* Estilos base del modal */
+        .producto-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        
+        .producto-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+            color: #333;
+        }
+        
+        /* Nuevo layout responsive para el modal */
+        .modal-producto {
+            display: flex;
+            flex-direction: row;
+            padding: 20px;
+        }
+        
+        .modal-img {
+            flex: 1;
+            padding-right: 20px;
+        }
+        
+        .modal-img img {
+            width: 100%;
+            height: auto;
+            border-radius: var(--border-radius);
+            object-fit: cover;
+        }
+        
+        .modal-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .modal-categoria {
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .modal-nombre {
+            font-size: 1.8rem;
+            margin: 0 0 10px;
+        }
+        
+        .modal-precio {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .modal-descripcion {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .modal-cantidad {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .cantidad-control {
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+        }
+        
+        .cantidad-btn {
+            width: 30px;
+            height: 30px;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
+        .cantidad-input {
+            width: 40px;
+            height: 30px;
+            text-align: center;
+            margin: 0 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        /* Media queries para hacer el modal responsive */
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+                max-height: 95vh;
+            }
+            
+            .modal-producto {
+                flex-direction: column;
+                padding: 15px;
+            }
+            
+            .modal-img {
+                padding-right: 0;
+                padding-bottom: 15px;
+            }
+            
+            .modal-img img {
+                max-height: 250px;
+                width: 100%;
+                object-fit: contain;
+            }
+            
+            .modal-nombre {
+                font-size: 1.5rem;
+            }
+            
+            .modal-precio {
+                font-size: 1.3rem;
+            }
+            
+            .modal-actions {
+                flex-direction: column;
+            }
+            
+            .modal-actions button {
+                width: 100%;
+            }
+        }
+        
+        /* Para pantallas muy pequeñas */
+        @media (max-width: 480px) {
+            .modal-content {
+                width: 100%;
+                height: 100%;
+                max-height: 100vh;
+                border-radius: 0;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .modal-close {
+                top: 10px;
+                right: 10px;
+                font-size: 1.2rem;
+            }
+            
+            .modal-body {
+                flex: 1;
+                overflow-y: auto;
+                padding-bottom: 20px;
+            }
+            
+            .modal-img img {
+                max-height: 200px;
+            }
+            
+            .modal-nombre {
+                font-size: 1.3rem;
+            }
+            
+            .modal-precio {
+                font-size: 1.2rem;
+            }
+            
+            .cantidad-btn, .cantidad-input {
+                height: 36px;
+            }
+            
+            .cantidad-btn {
+                width: 36px;
+            }
+        }
+    `;    
+
     function cerrarModal() {
         modal.classList.remove('active');
         document.body.style.overflow = '';
@@ -290,7 +808,10 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         
-        // Mostrar notificación (puedes implementar una mejor UI para esto)
+        // Actualizar el contador del carrito inmediatamente
+        actualizarCarrito();
+        
+        // Mostrar notificación
         const notificacion = document.createElement('div');
         notificacion.className = 'notificacion';
         notificacion.textContent = `¡${producto.nombre} agregado al carrito!`;
@@ -479,6 +1000,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     `;
     document.head.appendChild(style);
+    document.head.appendChild(modalResponsiveStyles);
     
     window.addEventListener('scroll', revelarElementos);
     
@@ -488,4 +1010,5 @@ document.addEventListener('DOMContentLoaded', function() {
     actualizarCarousel();
     actualizarNavActivo();
     revelarElementos();
+    actualizarCarrito();
 });
