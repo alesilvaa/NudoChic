@@ -377,7 +377,7 @@ document.head.appendChild(cartStyles);
         },
         {
             id: 3,
-            nombre: 'Cartera Multicolor',
+            nombre: 'Cartera Monocromatica',
             categoria: 'De Hombro',
             precio: 235.000,
             imagen: '/IMG/DeHombro/bolso de trapillo a crochet.jpeg',
@@ -417,7 +417,7 @@ document.head.appendChild(cartStyles);
         },
         {
             id: 8,
-            nombre: 'Yoselain',
+            nombre: 'Cartera Multicolor',
             categoria: 'De Hombro',
             precio: 119.000,
             imagen: '/IMG/DeHombro/dehombro.jpeg',
