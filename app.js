@@ -420,7 +420,7 @@ document.head.appendChild(cartStyles);
             nombre: 'Cartera Multicolor',
             categoria: 'De Hombro',
             precio: 119.000,
-            imagen: '/IMG/DeHombro/dehombro.jpeg',
+            imagen: '/IMG/yose.jpg',
             descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
         }
     ];
