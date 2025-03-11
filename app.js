@@ -510,7 +510,7 @@ document.head.appendChild(cartStyles);
                 <div class="modal-info">
                     <div class="modal-categoria">${producto.categoria}</div>
                     <h2 class="modal-nombre">${producto.nombre}</h2>
-                    <div class="modal-precio">$${producto.precio.toFixed(2)}</div>
+                    <div class="modal-precio">$${producto.precio.toFixed(3)}</div>
                     <p class="modal-descripcion">${producto.descripcion}</p>
                     <div class="modal-cantidad">
                         <span>Cantidad:</span>
