@@ -63,7 +63,7 @@ function actualizarCarrito() {
             </div>
             <div class="cart-item-details">
                 <h4>${item.nombre}</h4>
-                <div class="cart-item-price">$${item.precio.toFixed(2)}</div>
+                <div class="cart-item-price">Gs.${item.precio.toFixed(3)}</div>
                 <div class="cart-item-quantity">
                     <button class="quantity-btn cart-decrement" data-id="${item.id}">-</button>
                     <span>${item.cantidad}</span>
@@ -80,7 +80,7 @@ function actualizarCarrito() {
     
     // Actualizar contador y total
     cartCount.textContent = carrito.reduce((acc, item) => acc + item.cantidad, 0);
-    cartTotalPrice.textContent = `$${total.toFixed(2)}`;
+    cartTotalPrice.textContent = `Gs.${total.toFixed(3)}`;
     
     // Añadir event listeners a los botones
     document.querySelectorAll('.cart-decrement').forEach(btn => {
