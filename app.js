@@ -438,7 +438,7 @@ document.head.appendChild(cartStyles);
         card.className = 'producto-card';
         card.dataset.categoria = producto.categoria;
         
-        card.innerHTML = `
+        const cardContent = `
             <img src="${producto.imagen}" alt="${producto.nombre}" class="producto-img">
             <div class="producto-info">
                 <div class="producto-categoria">${producto.categoria}</div>
@@ -451,28 +451,74 @@ document.head.appendChild(cartStyles);
             </div>
         `;
         
-        // Event listener para botón de detalles
-        card.querySelector('.btn-detalles').addEventListener('click', () => {
+        card.innerHTML = cardContent;
+        
+        // Añadir event listeners después de crear el contenido
+        const detallesBtn = card.querySelector('.btn-detalles');
+        const agregarBtn = card.querySelector('.btn-agregar');
+        
+        detallesBtn.addEventListener('click', () => {
             abrirModal(producto);
         });
         
-        // Event listener para botón de agregar
-        card.querySelector('.btn-agregar').addEventListener('click', () => {
+        agregarBtn.addEventListener('click', () => {
             agregarAlCarrito(producto);
         });
         
         return card;
     }
     
-    // Cargar productos iniciales
-    function cargarProductos(productos, filtro = 'todos') {
+    // Filtros de productos
+    let isScrolling = false;
+
+    function actualizarProductos(filtro) {
+        // Limpiar el grid
         productosGrid.innerHTML = '';
         
-        productos.forEach(producto => {
-            if (filtro === 'todos' || producto.categoria === filtro) {
-                productosGrid.appendChild(crearProductoCard(producto));
+        // Filtrar y mostrar productos
+        const productosFiltrados = filtro === 'todos' 
+            ? productos 
+            : productos.filter(p => p.categoria === filtro);
+            
+        productosFiltrados.forEach(producto => {
+            const card = crearProductoCard(producto);
+            productosGrid.appendChild(card);
+        });
+    }
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Actualizar clase activa
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            // Actualizar productos inmediatamente
+            const filtro = btn.dataset.filter;
+            actualizarProductos(filtro);
+            
+            // Scroll opcional
+            if (!isScrolling) {
+                const catalogoSection = document.getElementById('catalogo');
+                const headerHeight = document.querySelector('header').offsetHeight;
+                const targetPosition = catalogoSection.offsetTop - headerHeight;
+                
+                isScrolling = true;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+
+                setTimeout(() => {
+                    isScrolling = false;
+                }, 1000);
             }
         });
+    });
+
+    // Cargar productos iniciales
+    function cargarProductos(productos, filtro = 'todos') {
+        actualizarProductos(filtro);
     }
     
     // Cargar productos destacados en el carousel
@@ -486,19 +532,6 @@ document.head.appendChild(cartStyles);
             carouselTrack.appendChild(slide);
         });
     }
-    
-    // Filtros de productos
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Actualizar clase activa
-            filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            // Filtrar productos
-            const filtro = btn.dataset.filter;
-            cargarProductos(productos, filtro);
-        });
-    });
     
     // Modal de producto
     function abrirModal(producto) {

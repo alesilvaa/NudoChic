@@ -133,6 +133,17 @@ nav {
     margin: 0 auto;
 }
 
+.logo {
+    grid-column: 2; /* Segunda columna (central) */
+    text-align: center;
+}
+
+.logo img {
+    max-height: 50px;
+    width: auto;
+    object-fit: contain;
+}
+
 .logo h1 {
     font-size: 1.8rem;
     font-weight: 700;
@@ -734,12 +745,6 @@ footer {
     gap: 15px;
 }
 
-
-.logo {
-    grid-column: 2; /* Segunda columna (central) */
-    text-align: center;
-}
-
 .cart-icon {
     grid-column: 3; /* Tercera columna */
     justify-self: end; /* Alineado a la derecha */
@@ -864,6 +869,10 @@ footer {
         transform: none; /* Quitar transformación */
         order: 2; /* Mantener el orden */
         flex: 1; /* Mantener */
+    }
+    
+    .logo img {
+        max-height: 40px;
     }
     
     .nav-links {
