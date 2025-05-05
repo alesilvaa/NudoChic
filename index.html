@@ -19,10 +19,9 @@
             <div class="logo">
                 <img src="IMG/Icono/NudoChic.webp" alt="NudoChic Logo">
             </div>
-
-            <div class="cart-icon" id="cart-toggle">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="cart-count">0</span>
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar productos...">
+                <i class="fas fa-search"></i>
             </div>
             <ul class="nav-links" id="nav-links">
                 <li><a href="#inicio" class="active">Inicio</a></li>
@@ -30,6 +29,10 @@
                 <li><a href="#nosotros">Nosotros</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
+            <div class="cart-icon" id="cart-toggle">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+            </div>
         </nav>
     </header>
 
@@ -55,10 +58,15 @@
     <div class="cart-overlay" id="cart-overlay"></div>
 
     <section id="hero">
-        <div class="hero-content">
-            <h1>Descubre tu estilo en <span>NudoChic</span></h1>
-            <p>Diseños únicos que expresan tu personalidad</p>
-            <a href="#catalogo" class="btn-primary">Ver Catálogo</a>
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Descubre tu estilo en<img src="IMG/Icono/NudoChic.webp" alt="NudoChic Logo" class="hero-logo-inline"></h1>
+                <p>Diseños únicos que expresan tu personalidad</p>
+                <a href="#catalogo" class="btn-primary">Ver Catálogo</a>
+            </div>
+            <div class="hero-image">
+                <!-- La imagen se agregará como fondo en CSS -->
+            </div>
         </div>
     </section>
 
@@ -184,7 +192,7 @@
     <footer>
         <div class="footer-container">
             <div class="footer-logo">
-                <h2>Nudo<span>Chic</span></h2>
+                <img src="IMG/Icono/NudoChic.webp" alt="NudoChic Logo">
                 <p>Diseño y estilo para tu vida</p>
             </div>
             <div class="footer-links">

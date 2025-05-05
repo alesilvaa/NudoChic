@@ -318,11 +318,12 @@ document.head.appendChild(cartStyles);
     // Menu toggle
     menuToggle.addEventListener('click', () => {
         navLinks.classList.toggle('active');
+        menuToggle.classList.toggle('active');
     });
     
     // Header scroll effect
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 100) {
+        if (window.scrollY > 50) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
@@ -342,6 +343,7 @@ document.head.appendChild(cartStyles);
             if (targetElement) {
                 // Close mobile menu if open
                 navLinks.classList.remove('active');
+                menuToggle.classList.remove('active');
                 
                 window.scrollTo({
                     top: targetElement.offsetTop - header.offsetHeight,
@@ -1044,4 +1046,29 @@ document.head.appendChild(cartStyles);
     actualizarNavActivo();
     revelarElementos();
     actualizarCarrito();
+
+    // Search Functionality
+    const searchBar = document.querySelector('.search-bar');
+    const searchInput = document.querySelector('.search-bar input');
+
+    searchInput.addEventListener('focus', () => {
+        searchBar.style.boxShadow = '0 0 0 2px var(--primary-color)';
+    });
+
+    searchInput.addEventListener('blur', () => {
+        searchBar.style.boxShadow = 'none';
+    });
+
+    searchInput.addEventListener('input', (e) => {
+        // Implement search functionality here
+        console.log('Searching for:', e.target.value);
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+            navLinks.classList.remove('active');
+            menuToggle.classList.remove('active');
+        }
+    });
 });
