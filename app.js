@@ -47,7 +47,7 @@ function actualizarCarrito() {
     if (carrito.length === 0) {
         cartItems.innerHTML = '<p class="empty-cart">Tu carrito está vacío</p>';
         cartCount.textContent = '0';
-        cartTotalPrice.textContent = '$0.00';
+        cartTotalPrice.textContent = 'Gs.0.00';
         return;
     }
     
@@ -556,8 +556,8 @@ document.head.appendChild(cartStyles);
                         </div>
                     </div>
                     <div class="modal-actions">
-                        <button class="btn-primary agregar-carrito-modal" data-id="${producto.id}">Agregar al Carrito</button>
-                        <button class="btn-secondary">Comprar Ahora</button>
+                        <button class="btn-primary agregar-carrito-modal" data-id="${producto.id}">Comprar Ahora</button>
+                        <button class="btn-secondary">Agregar al Carrito</button>
                     </div>
                 </div>
             </div>
@@ -588,6 +588,13 @@ document.head.appendChild(cartStyles);
             const cantidad = parseInt(cantidadInput.value);
             agregarAlCarrito(producto, cantidad);
             cerrarModal();
+        });
+        
+        // Event listener para el botón de agregar al carrito
+        const agregarBtn = modalBody.querySelector('.btn-secondary');
+        agregarBtn.addEventListener('click', () => {
+            const cantidad = parseInt(cantidadInput.value);
+            agregarAlCarrito(producto, cantidad);
         });
         
         // Mostrar modal
@@ -911,21 +918,6 @@ document.head.appendChild(cartStyles);
             cargarMasBtn.disabled = true;
         }, 1000);
     });
-    
-    // Formulario de newsletter
-    const newsletterForm = document.getElementById('newsletter-form');
-    if (newsletterForm) {
-        newsletterForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = newsletterForm.querySelector('input').value;
-            
-            // Simular envío de formulario
-            console.log('Suscripción newsletter:', email);
-            
-            // Mostrar mensaje de éxito
-            newsletterForm.innerHTML = '<p class="success-message">¡Gracias por suscribirte! Recibirás nuestras novedades pronto.</p>';
-        });
-    }
     
     // Formulario de contacto
     const contactForm = document.getElementById('form-contacto');
