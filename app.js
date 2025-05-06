@@ -138,7 +138,7 @@ checkoutBtn.addEventListener('click', () => {
     }
     
     // Formatear el mensaje para WhatsApp
-    const numeroWhatsApp = '595972669300'; 
+    const numeroWhatsApp = '595986942192'; 
     let mensaje = '¡Hola Nudochic! Me gustaría realizar el siguiente pedido:\n\n';
     
     carrito.forEach((item, index) => {
