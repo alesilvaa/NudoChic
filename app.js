@@ -138,18 +138,18 @@ checkoutBtn.addEventListener('click', () => {
     }
     
     // Formatear el mensaje para WhatsApp
-    const numeroWhatsApp = '59572669300'; 
+    const numeroWhatsApp = '595972669300'; 
+    
+    // Emojis directamente insertados (no como constantes Unicode)
     let mensaje = '¡Hola Nudochic! Me gustaría realizar el siguiente pedido:\n\n';
     
     carrito.forEach((item, index) => {
-        mensaje += `${index + 1}. ${item.nombre}\n`;
-        mensaje += `   Cantidad: ${item.cantidad}\n`;
-        mensaje += `   Color: \n`;
+        mensaje += `${index + 1}.  ${item.nombre}\n`;
+        mensaje += `    Cantidad: ${item.cantidad}\n`;
+        mensaje += `    Color: \n`;
     });
     
-    //mensaje += `Total del pedido: Gs.${carrito.reduce((total, item) => total + (item.precio * item.cantidad), 0).toFixed(3)}\n\n`;
-    mensaje += 'Nota: ';
-    mensaje += '¡Gracias!';
+    mensaje += '\n¡Gracias! :)';
     
     // Codificar el mensaje para la URL
     const mensajeCodificado = encodeURIComponent(mensaje);
@@ -605,7 +605,29 @@ document.head.appendChild(cartStyles);
         const agregarCarritoBtn = modalBody.querySelector('.agregar-carrito-modal');
         agregarCarritoBtn.addEventListener('click', () => {
             const cantidad = parseInt(cantidadInput.value);
-            agregarAlCarrito(producto, cantidad);
+            
+            // Formatear el mensaje para WhatsApp
+            const numeroWhatsApp = '595972669300'; 
+            
+            // Emojis directamente insertados (no como constantes Unicode)
+            let mensaje = '¡Hola Nudochic! Me gustaría realizar el siguiente pedido:\n\n';
+            
+            mensaje += `1.  ${producto.nombre}\n`;
+            mensaje += `    Cantidad: ${cantidad}\n`;
+            mensaje += `    Color: \n`;
+            
+            mensaje += '\n¡Gracias! :)';
+            
+            // Codificar el mensaje para la URL
+            const mensajeCodificado = encodeURIComponent(mensaje);
+            
+            // Crear la URL de WhatsApp
+            const whatsappUrl = `https://wa.me/${numeroWhatsApp}?text=${mensajeCodificado}`;
+            
+            // Abrir WhatsApp en una nueva pestaña
+            window.open(whatsappUrl, '_blank');
+            
+            // Cerrar el modal
             cerrarModal();
         });
         
