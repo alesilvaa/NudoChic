@@ -137,11 +137,30 @@ checkoutBtn.addEventListener('click', () => {
         return;
     }
     
-    // Aquí puedes implementar la lógica para finalizar la compra
-    // Por ejemplo, redirigir a una página de checkout o mostrar un formulario
+    // Formatear el mensaje para WhatsApp
+    const numeroWhatsApp = '595972669300'; 
+    let mensaje = '¡Hola Nudochic! Me gustaría realizar el siguiente pedido:\n\n';
     
-    // Simulación de finalización de compra
-    alert('¡Gracias por tu compra! Total: $' + cartTotalPrice.textContent.slice(1));
+    carrito.forEach((item, index) => {
+        mensaje += `${index + 1}. ${item.nombre}\n`;
+        mensaje += `   Cantidad: ${item.cantidad}\n`;
+        mensaje += `   Precio unitario: Gs.${item.precio.toFixed(3)}\n`;
+        mensaje += `   Subtotal: Gs.${(item.precio * item.cantidad).toFixed(3)}\n\n`;
+    });
+    
+    mensaje += `Total del pedido: Gs.${carrito.reduce((total, item) => total + (item.precio * item.cantidad), 0).toFixed(3)}\n\n`;
+    mensaje += '¡Gracias!';
+    
+    // Codificar el mensaje para la URL
+    const mensajeCodificado = encodeURIComponent(mensaje);
+    
+    // Crear la URL de WhatsApp
+    const whatsappUrl = `https://wa.me/${numeroWhatsApp}?text=${mensajeCodificado}`;
+    
+    // Abrir WhatsApp en una nueva pestaña
+    window.open(whatsappUrl, '_blank');
+    
+    // Limpiar el carrito después de redirigir
     carrito = [];
     actualizarCarrito();
     cerrarCarrito();
@@ -367,7 +386,7 @@ document.head.appendChild(cartStyles);
             categoria: 'De Mano',
             precio: 120.000,
             imagen: '/IMG/DeMano/demano3.jpeg',
-            descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+            descripcion: 'Elegante cartera de mano artesanal, elaborada con hilo trapillo de alta calidad. Diseño versátil y funcional, perfecta para ocasiones especiales. Incluye compartimento principal y bolsillos internos para una organización óptima.'
         },
         {
             id: 2,
@@ -375,7 +394,7 @@ document.head.appendChild(cartStyles);
             categoria: 'De Mano',
             precio: 99.000,
             imagen: '/IMG/DeMano/demano2.jpeg',
-            descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+            descripcion: 'Protector artesanal para notebook, tejido a mano con hilo trapillo resistente. Diseño acolchado que brinda protección adicional contra golpes y rasguños. Incluye asa para fácil transporte y bolsillo exterior para accesorios.'
         },
         {
             id: 3,
@@ -383,7 +402,7 @@ document.head.appendChild(cartStyles);
             categoria: 'De Hombro',
             precio: 235.000,
             imagen: '/IMG/DeHombro/bolso de trapillo a crochet.jpeg',
-            descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+            descripcion: 'Sofisticada cartera de hombro en tonos monocromáticos, elaborada con técnica de crochet en hilo trapillo. Diseño espacioso con múltiples compartimentos y correa ajustable. Perfecta para el día a día, combinando estilo y funcionalidad.'
         },
         {
             id: 4,
@@ -391,7 +410,7 @@ document.head.appendChild(cartStyles);
             categoria: 'De Hombro',
             precio: 190.000,
             imagen: '/IMG/DeHombro/img2.jpeg',
-            descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+            descripcion: 'Exclusiva cartera de hombro con detalles de perlas, tejida a mano en hilo trapillo. Diseño elegante que combina la artesanía tradicional con elementos decorativos contemporáneos. Ideal para eventos especiales y ocasiones formales.'
         },
         {
             id: 5,
@@ -399,7 +418,7 @@ document.head.appendChild(cartStyles);
             categoria: 'NewCollection',
             precio: 50.000,
             imagen: '/IMG/Extras/extra2.jpeg',
-            descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+            descripcion: 'Protector artesanal para auriculares, tejido en hilo trapillo con técnica de crochet. Diseño compacto y resistente que mantiene tus auriculares seguros y organizados. Incluye cordón para fácil transporte.'
         },
         {
             id: 6,
@@ -407,7 +426,7 @@ document.head.appendChild(cartStyles);
             categoria: 'NewCollection',
             precio: 80.000,
             imagen: '/IMG/Extras/extra.jpeg',
-            descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+            descripcion: 'Funda protectora para celular, elaborada a mano con hilo trapillo de alta durabilidad. Diseño personalizado con técnica de crochet que brinda protección contra impactos. Incluye abertura para acceso a la cámara y puertos.'
         },
         {
             id: 7,
@@ -415,7 +434,7 @@ document.head.appendChild(cartStyles);
             categoria: 'De Mano',
             precio: 109.000,
             imagen: '/IMG/DeMano/demano.jpeg',
-            descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+            descripcion: 'Clásica cartera de mano en negro, tejida artesanalmente con hilo trapillo. Diseño atemporal con compartimentos internos para una organización eficiente. Perfecta para complementar cualquier look, desde casual hasta formal.'
         },
         {
             id: 8,
@@ -423,7 +442,7 @@ document.head.appendChild(cartStyles);
             categoria: 'De Hombro',
             precio: 119.000,
             imagen: '/IMG/yose.jpg',
-            descripcion: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+            descripcion: 'Vibrante cartera de hombro multicolor, elaborada con hilo trapillo en diversos tonos. Diseño único que combina diferentes colores en un patrón armónico. Espaciosa y funcional, ideal para el uso diario.'
         }
     ];
     
